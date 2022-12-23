@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Bill;
 import com.example.demo.entity.User;
+import com.example.demo.repository.BillRepository;
 import com.example.demo.repository.UserRepository;
 
 
@@ -42,7 +43,22 @@ public class UserController {
 		return null;
 	}
 	
-	 @GetMapping("/{user}/bill") //por username (se totea)
+	@PostMapping("/{id}/bills")
+	public Bill postBillPorUser(@RequestBody Bill bill, @PathVariable Integer id) {
+		
+		Optional<User> usuarios=userRepository.findById(id);
+		if(usuarios.isPresent()) {
+			//aqui debería setearle el bill
+			usuarios.get().setBills(null);
+		}
+		
+		return bill;
+		
+	}
+	
+	
+
+	@GetMapping("/{user}/bill") //por username (se totea)
 		public List<Bill> getUsuariosbyUser(@PathVariable String user) {
 			
 			List<User> usuarios = userRepository.findByUser(user);
@@ -57,11 +73,12 @@ public class UserController {
 		}
 	
 	
-	@GetMapping("/{id}/bills/{idmov}")
+	@GetMapping("/{id}/bills/{idmov}") //porsiaca
 	public List<Bill> userBill(@PathVariable Integer id,@PathVariable Integer idmov){
 		
 		Optional<User>usuarios=userRepository.findById(id);
 		if(usuarios.isPresent()) {
+			
 			return usuarios.get().getBills();
 		}
 		
