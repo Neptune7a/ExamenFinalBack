@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	private BillRepository billRepository;
 	
 	@GetMapping
 	public List<User> getUserAll() {
@@ -44,7 +46,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/{id}/bills")
-	public Bill postBillPorUser(@RequestBody Bill bill, @PathVariable Integer id) {
+	public Bill postBillByUser(@RequestBody Bill bill, @PathVariable Integer id) {
 		
 		Optional<User> usuarios=userRepository.findById(id);
 		if(usuarios.isPresent()) {
@@ -54,6 +56,25 @@ public class UserController {
 		
 		return bill;
 		
+		
+	}
+	
+	@DeleteMapping("/{id}/bills/{idbill}")
+	public Bill deleteBillById(@PathVariable Integer id, @PathVariable Integer idbill) {
+		
+		billRepository = null;
+		
+		Optional<User>usuarios=userRepository.findById(id);
+		Optional<Bill>bills=billRepository.findById(idbill);
+		if(usuarios.isPresent()) {
+			if(bills.isPresent()) {
+				Bill bill= bills.get();
+				billRepository.deleteById(idbill); //ni idea
+				return bill;
+			}
+		}
+		
+		return null;
 	}
 	
 	
