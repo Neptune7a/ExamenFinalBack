@@ -53,8 +53,8 @@ public class User implements Serializable {
 	public List<Bill> getBills() {
 		return bills;
 	}
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
+	public void setBills(Bill bill) {
+		this.bills.add(bill);
 	}
 	
 	

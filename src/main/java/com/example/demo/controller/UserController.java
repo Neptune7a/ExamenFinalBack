@@ -49,7 +49,7 @@ public class UserController {
 		Optional<User> usuarios=userRepository.findById(id);
 		if(usuarios.isPresent()) {
 			//aqui debería setearle el bill
-			usuarios.get().setBills(null);
+			usuarios.get().setBills(bill);
 		}
 		
 		return bill;
@@ -57,20 +57,6 @@ public class UserController {
 	}
 	
 	
-
-	@GetMapping("/{user}/bill") //por username (se totea)
-		public List<Bill> getUsuariosbyUser(@PathVariable String user) {
-			
-			List<User> usuarios = userRepository.findByUser(user);
-			
-			
-			if (!usuarios.isEmpty()) {
-				return usuarios.get(0).getBills();
-			}
-			
-			return null;
-
-		}
 	
 	
 	@GetMapping("/{id}/bills/{idmov}") //porsiaca
