@@ -17,15 +17,11 @@ public class Bill implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private Timestamp date_bill;
-	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	private Integer type;
 	private String observation;
-	
-	
-	
 	
 	public Integer getId() {
 		return id;
